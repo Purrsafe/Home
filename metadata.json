@@ -1,0 +1,8 @@
+{
+  "name": "Remix PurrSafe - Cát Mèo Mix Hương Sữa Cao Cấp",
+  "description": "Website chính thức giới thiệu Cát Mèo Mix PurrSafe, thành phần đậu hũ, than hoạt tính, khoáng tự nhiên, chính sách tuyển đại lý và nhà phân phối toàn quốc.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
