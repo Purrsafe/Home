@@ -1,30 +1,38 @@
-import React, { useState } from 'react';
-import { Sparkles, Phone, Shield, Leaf, Droplets, Star, Camera } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Sparkles, Phone, Shield, Leaf, Droplets, Star, Camera, Film, Play, Volume2, VolumeX } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+
+// Import bundled product photography directly so Vite bundles and hashes them with guaranteed valid URLs
+import photoStudio from '../assets/images/purrsafe_studio_exact_1790848511657.jpg';
+import photoOutdoor from '../assets/images/purrsafe_real_outdoor_1790848351015.jpg';
+import photoReal from '../assets/images/purrsafe_real_product_1790846575816.jpg';
 
 export const Hero: React.FC = () => {
   const { t } = useLanguage();
   const [activeHighlight, setActiveHighlight] = useState<number>(0);
-  const [selectedPhoto, setSelectedPhoto] = useState<'studio' | 'outdoor'>('studio');
+  const [selectedMedia, setSelectedMedia] = useState<'video' | 'studio' | 'outdoor'>('video');
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const baseUrl = import.meta.env.BASE_URL;
+  const videoSrc = `${baseUrl}videos/purrsafe_test_quality.mp4`;
+  const posterSrc = `${baseUrl}videos/purrsafe_video_poster.jpg`;
 
   const photos = {
     studio: {
-      src: '/images/1ddebf6f2c31ac6ff520.jpg',
-      label: 'Studio Bao Bì',
+      src: photoStudio,
+      label: 'Ảnh Studio',
       alt: 'PurrSafe Mixed Cat Litter MILK 2.8KG Hình ảnh thực tế studio',
-      aspect: 'max-h-[640px] object-contain',
+      aspect: 'max-h-[600px] object-contain',
       tag: 'Chụp Thực Tế 100%',
     },
     outdoor: {
-      src: '/images/d34730b9d5e755b90cf6.jpg',
-      label: 'Chụp Ngoài Trời',
+      src: photoOutdoor,
+      label: 'Ảnh Ngoài Trời',
       alt: 'PurrSafe Mixed Cat Litter MILK 2.8KG Chụp ngoại cảnh thực tế',
-      aspect: 'max-h-[640px] aspect-[4/3] object-cover',
+      aspect: 'max-h-[600px] aspect-[4/3] object-cover',
       tag: 'Ảnh Ngoại Cảnh',
     },
   };
-
-  const currentPhoto = photos[selectedPhoto];
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-[#FDFBF7] via-[#F8F4EE] to-[#FAF8F5] pt-8 pb-16 lg:pt-12 lg:pb-20 border-b border-stone-200">
@@ -128,9 +136,10 @@ export const Hero: React.FC = () => {
               <a
                 href={`tel:${t.brand.hotline}`}
                 className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-white hover:bg-stone-50 text-stone-900 border-2 border-stone-300 font-bold text-base shadow-xs hover:border-amber-700 transition-all text-center"
+                title={t.hero.ctaHotline}
               >
                 <Phone className="w-4 h-4 text-amber-700" />
-                <span>{t.hero.ctaHotline}</span>
+                <span>{t.brand.hotlineFormatted}</span>
               </a>
             </div>
 
@@ -149,49 +158,103 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Right Column: Visual Product Packaging Showcase 100% Matching Uploaded Photo */}
-          <div className="lg:col-span-6 relative">
+          <div id="hinh-anh-thuc-te" className="lg:col-span-6 relative scroll-mt-24">
             <div className="relative mx-auto max-w-sm sm:max-w-md">
               
-              {/* Actual Product Photo from 1ddebf6f2c31ac6ff520.jpg */}
+              {/* Media Showcase Frame (Video or Photos) */}
               <div className="relative rounded-3xl overflow-hidden bg-stone-900 p-2 shadow-2xl border-4 border-stone-800/80 ring-1 ring-stone-900/10 group">
-                <img
-                  src={currentPhoto.src}
-                  alt={currentPhoto.alt}
-                  className={`w-full h-auto ${currentPhoto.aspect} object-center rounded-2xl group-hover:scale-[1.01] transition-transform duration-500`}
-                />
+                
+                {selectedMedia === 'video' ? (
+                  <div className="relative w-full aspect-[4/3] bg-stone-950 rounded-2xl overflow-hidden flex items-center justify-center">
+                    <video
+                      ref={videoRef}
+                      src={videoSrc}
+                      poster={posterSrc}
+                      controls
+                      playsInline
+                      loop
+                      className="w-full h-full object-cover"
+                    />
 
-                {/* Floating Tag */}
-                <div className="absolute top-5 left-5 bg-stone-900/90 backdrop-blur-md text-white p-3 rounded-2xl shadow-lg border border-white/10 max-w-[200px]">
-                  <div className="text-[10px] uppercase font-bold tracking-widest text-amber-400 flex items-center gap-1">
-                    <Camera className="w-3 h-3 text-amber-400" />
-                    <span>{currentPhoto.tag}</span>
-                  </div>
-                  <div className="text-sm font-extrabold mt-0.5">{t.hero.realPhotoBadge}</div>
-                  <div className="text-[11px] text-stone-300 mt-0.5 flex items-center gap-1">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
-                    {t.hero.scentBadge}
-                  </div>
-                </div>
+                    {/* Floating Top Tag */}
+                    <div className="absolute top-4 left-4 bg-stone-900/90 backdrop-blur-md text-white px-3 py-1.5 rounded-xl shadow-lg border border-white/10 pointer-events-none z-10 flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-xs font-bold text-amber-300">Video Thực Tế (25s)</span>
+                    </div>
 
-                {/* Floating Bottom Card */}
-                <div className="absolute bottom-5 right-5 bg-white/95 backdrop-blur-md text-stone-900 p-3.5 rounded-2xl shadow-xl border border-stone-200/90 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-lg">
-                    3s
+                    {/* Floating Bottom Card */}
+                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-stone-900 px-3 py-2 rounded-xl shadow-xl border border-stone-200/90 pointer-events-none z-10 flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm">
+                        30s
+                      </div>
+                      <div className="text-left">
+                        <div className="text-xs font-bold text-stone-900">Vón Nhanh 30s</div>
+                        <div className="text-[10px] text-stone-500">Không Bám Đáy Khay</div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-left">
-                    <div className="text-xs font-bold text-stone-900">{t.hero.clumpBadge}</div>
-                    <div className="text-[11px] text-stone-500">{t.hero.nonStickSub}</div>
+                ) : (
+                  <div className="relative w-full">
+                    <img
+                      src={photos[selectedMedia].src}
+                      alt={photos[selectedMedia].alt}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (target.src !== photoReal) {
+                          target.src = photoReal;
+                        }
+                      }}
+                      className={`w-full h-auto ${photos[selectedMedia].aspect} object-center rounded-2xl group-hover:scale-[1.01] transition-transform duration-500`}
+                    />
+
+                    {/* Floating Tag */}
+                    <div className="absolute top-5 left-5 bg-stone-900/90 backdrop-blur-md text-white p-3 rounded-2xl shadow-lg border border-white/10 max-w-[200px]">
+                      <div className="text-[10px] uppercase font-bold tracking-widest text-amber-400 flex items-center gap-1">
+                        <Camera className="w-3 h-3 text-amber-400" />
+                        <span>{photos[selectedMedia].tag}</span>
+                      </div>
+                      <div className="text-sm font-extrabold mt-0.5">{t.hero.realPhotoBadge}</div>
+                      <div className="text-[11px] text-stone-300 mt-0.5 flex items-center gap-1">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
+                        {t.hero.scentBadge}
+                      </div>
+                    </div>
+
+                    {/* Floating Bottom Card */}
+                    <div className="absolute bottom-5 right-5 bg-white/95 backdrop-blur-md text-stone-900 p-3.5 rounded-2xl shadow-xl border border-stone-200/90 flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-lg">
+                        3s
+                      </div>
+                      <div className="text-left">
+                        <div className="text-xs font-bold text-stone-900">{t.hero.clumpBadge}</div>
+                        <div className="text-[11px] text-stone-500">{t.hero.nonStickSub}</div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
+
               </div>
 
-              {/* Photo Switcher Thumbnails */}
+              {/* Media Switcher: Video vs Studio vs Outdoor */}
               <div className="mt-3 flex items-center justify-center gap-2">
                 <button
                   type="button"
-                  onClick={() => setSelectedPhoto('studio')}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
-                    selectedPhoto === 'studio'
+                  onClick={() => setSelectedMedia('video')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                    selectedMedia === 'video'
+                      ? 'bg-amber-800 text-white shadow-xs ring-2 ring-amber-500/30'
+                      : 'bg-white text-stone-700 border border-stone-200 hover:bg-stone-50'
+                  }`}
+                >
+                  <Film className="w-3.5 h-3.5" />
+                  <span>Video Thực Tế (25s)</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setSelectedMedia('studio')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                    selectedMedia === 'studio'
                       ? 'bg-amber-800 text-white shadow-xs ring-2 ring-amber-500/30'
                       : 'bg-white text-stone-700 border border-stone-200 hover:bg-stone-50'
                   }`}
@@ -199,11 +262,12 @@ export const Hero: React.FC = () => {
                   <span>📸</span>
                   <span>{photos.studio.label}</span>
                 </button>
+
                 <button
                   type="button"
-                  onClick={() => setSelectedPhoto('outdoor')}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
-                    selectedPhoto === 'outdoor'
+                  onClick={() => setSelectedMedia('outdoor')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                    selectedMedia === 'outdoor'
                       ? 'bg-amber-800 text-white shadow-xs ring-2 ring-amber-500/30'
                       : 'bg-white text-stone-700 border border-stone-200 hover:bg-stone-50'
                   }`}

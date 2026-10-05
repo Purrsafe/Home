@@ -9,6 +9,7 @@ export const Header: React.FC = () => {
 
   const navLinks = [
     { label: t.nav.intro, href: '#gioi-thieu' },
+    { label: t.nav.video, href: '#hinh-anh-thuc-te' },
     { label: t.nav.features, href: '#uu-diem' },
     { label: t.nav.ingredients, href: '#thanh-phan' },
     { label: t.nav.reviews, href: '#danh-gia' },

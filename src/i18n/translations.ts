@@ -3,6 +3,7 @@ export type Language = 'vi' | 'zh' | 'en';
 export interface TranslationContent {
   nav: {
     intro: string;
+    video: string;
     features: string;
     ingredients: string;
     reviews: string;
@@ -212,12 +213,36 @@ export interface TranslationContent {
     callBtn: string;
     distributorBtn: string;
   };
+  video: {
+    badge: string;
+    title: string;
+    subtitle: string;
+    watchBtn: string;
+    pauseBtn: string;
+    replayBtn: string;
+    chaptersTitle: string;
+    chapters: {
+      time: string;
+      seconds: number;
+      tag: string;
+      title: string;
+      desc: string;
+    }[];
+    highlights: {
+      value: string;
+      label: string;
+      desc: string;
+    }[];
+    ctaTrial: string;
+    ctaHotline: string;
+  };
 }
 
 export const TRANSLATIONS: Record<Language, TranslationContent> = {
   vi: {
     nav: {
       intro: 'Giới thiệu',
+      video: 'Video Thực Tế',
       features: 'Ưu điểm',
       ingredients: 'Thành phần',
       reviews: 'Khách hàng đánh giá',
@@ -732,11 +757,82 @@ export const TRANSLATIONS: Record<Language, TranslationContent> = {
       callBtn: 'Gọi Ngay',
       distributorBtn: 'Tư Vấn Đại Lý',
     },
+    video: {
+      badge: 'KIỂM CHỨNG THỰC TẾ 100%',
+      title: 'Video Trực Quan Kiểm Tra Chất Lượng Cát PurrSafe',
+      subtitle: 'Xem toàn bộ quá trình kiểm tra thực tế: độ hút nước siêu tốc, đóng khối vón trong 30s, chống bám đáy khay và chịu va đập không vỡ vụn.',
+      watchBtn: 'Xem Video Thử Nghiệm (25s)',
+      pauseBtn: 'Tạm Dừng',
+      replayBtn: 'Xem Lại Từ Đầu',
+      chaptersTitle: '5 Điểm Kiểm Chứng Trong Clip',
+      chapters: [
+        {
+          time: '00:00',
+          seconds: 0,
+          tag: '01. MỞ ĐẦU',
+          title: 'Bao bì & Ngoại cảnh',
+          desc: 'Cùng mình kiểm chứng chất lượng cát PurrSafe 2.8Kg nhé!',
+        },
+        {
+          time: '00:05',
+          seconds: 5,
+          tag: '02. CẤU TRÚC HẠT',
+          title: 'Khả năng thấm hút nước',
+          desc: 'Tỷ lệ vàng 70:20:10 (Đậu nành, than hoạt tính, khoáng tự nhiên).',
+        },
+        {
+          time: '00:10',
+          seconds: 10,
+          tag: '03. THỬ NGHIỆM',
+          title: 'Rót trực tiếp chất lỏng',
+          desc: 'Đổ nước vào khay trong suốt để kiểm tra tốc độ ngậm nước.',
+        },
+        {
+          time: '00:15',
+          seconds: 15,
+          tag: '04. VÓN CỤC 30S',
+          title: 'Không bám đáy khay cát',
+          desc: 'Vón chắc nịch chưa đầy 30 giây, xẻng xúc nhấc lên sạch bong.',
+        },
+        {
+          time: '00:20',
+          seconds: 20,
+          tag: '05. ĐỘ BỀN KHỐI',
+          title: 'Va đập mạnh không lo vỡ',
+          desc: 'Thả rơi tự do từ trên cao xuống nền sàn gỗ không hề bị vỡ vụn.',
+        },
+      ],
+      highlights: [
+        {
+          value: '< 30s',
+          label: 'Vón cục thần tốc',
+          desc: 'Đóng khối chắc chỉ trong tích tắc khi tiếp xúc chất lỏng.',
+        },
+        {
+          value: '0%',
+          label: 'Không bám dính đáy',
+          desc: 'Đáy khay trong suốt sạch hoàn toàn, dễ xúc dọn.',
+        },
+        {
+          value: '100%',
+          label: 'Chống vỡ vụn khi rơi',
+          desc: 'Khối vón dẻo dai, không vỡ bụi rơi ngược lại khay.',
+        },
+        {
+          value: '99%',
+          label: 'Khử mùi & hạt sạch',
+          desc: 'Than hoạt tính ngậm mùi hôi, bảo vệ hô hấp bé cưng.',
+        },
+      ],
+      ctaTrial: 'Đăng Ký Nhận Mẫu Thử Miễn Phí',
+      ctaHotline: 'Gọi Hotline Tư Vấn: 0866 780 599',
+    },
   },
 
   zh: {
     nav: {
       intro: '产品介绍',
+      video: '实测视频',
       features: '核心优势',
       ingredients: '天然成分',
       reviews: '用户评价',
@@ -1248,11 +1344,82 @@ export const TRANSLATIONS: Record<Language, TranslationContent> = {
       callBtn: '立即拨打',
       distributorBtn: '加盟咨询',
     },
+    video: {
+      badge: '100% 真实品质实测',
+      title: 'PurrSafe 混合猫砂实拍性能测试视频',
+      subtitle: '全流程实机检测：瞬间吸水能力、30秒极速结团、绝不粘底以及高处坠落不碎裂强韧度。',
+      watchBtn: '播放实测视频 (25秒)',
+      pauseBtn: '暂停',
+      replayBtn: '重新播放',
+      chaptersTitle: '视频实测五大看点',
+      chapters: [
+        {
+          time: '00:00',
+          seconds: 0,
+          tag: '01. 真实外观',
+          title: '原厂包装与户外实拍',
+          desc: '与您一起开袋实测 PurrSafe 2.8KG 混合猫砂品质！',
+        },
+        {
+          time: '00:05',
+          seconds: 5,
+          tag: '02. 黄金配比',
+          title: '极速吸水性能',
+          desc: '70%豆腐砂 + 20%活性炭 + 10%天然膨润土科学混配。',
+        },
+        {
+          time: '00:10',
+          seconds: 10,
+          tag: '03. 吸水试验',
+          title: '大剂量液体瞬间渗透',
+          desc: '在透明实验盆中倾倒液体，实测猫砂秒吸表现。',
+        },
+        {
+          time: '00:15',
+          seconds: 15,
+          tag: '04. 秒级结团',
+          title: '30秒紧实结团·绝不粘底',
+          desc: '结团完整紧密，铲起瞬间盆底光洁如新无残留。',
+        },
+        {
+          time: '00:20',
+          seconds: 20,
+          tag: '05. 强韧耐摔',
+          title: '剧烈撞击不碎裂',
+          desc: '自由落体坠落木地板，结团完好不散落粉尘。',
+        },
+      ],
+      highlights: [
+        {
+          value: '< 30秒',
+          label: '极速结团',
+          desc: '遇水瞬间包裹聚拢，锁住异味。',
+        },
+        {
+          value: '0%',
+          label: '盆底粘连率',
+          desc: '干爽不粘底，铲屎轻松省力。',
+        },
+        {
+          value: '100%',
+          label: '撞击完整率',
+          desc: '结团韧性好，剧烈晃动不散架。',
+        },
+        {
+          value: '99%',
+          label: '除臭净味率',
+          desc: '球状活性炭深层吸附氨气异味。',
+        },
+      ],
+      ctaTrial: '申请免费样品试用',
+      ctaHotline: '全国招商热线: 0866 780 599',
+    },
   },
 
   en: {
     nav: {
       intro: 'Overview',
+      video: 'Test Video',
       features: 'Features',
       ingredients: 'Ingredients',
       reviews: 'Reviews',
@@ -1763,6 +1930,76 @@ export const TRANSLATIONS: Record<Language, TranslationContent> = {
       zaloBtn: 'Zalo / Chat',
       callBtn: 'Call Now',
       distributorBtn: 'Agency Inquiry',
+    },
+    video: {
+      badge: '100% REAL QUALITY TEST',
+      title: 'Real Demonstration Video: PurrSafe Cat Litter Quality',
+      subtitle: 'Watch the full laboratory test: instant water absorption, solid clumping under 30s, non-stick tray bottom, and zero crumbling upon hard drop.',
+      watchBtn: 'Watch Real Video Test (25s)',
+      pauseBtn: 'Pause',
+      replayBtn: 'Replay Video',
+      chaptersTitle: '5 Key Demonstration Milestones',
+      chapters: [
+        {
+          time: '00:00',
+          seconds: 0,
+          tag: '01. INTRO',
+          title: 'Packaging & Outdoor Presence',
+          desc: 'Let’s verify PurrSafe Mixed Cat Litter 2.8KG quality together!',
+        },
+        {
+          time: '00:05',
+          seconds: 5,
+          tag: '02. PELLET MIX',
+          title: 'Rapid Water Absorption',
+          desc: 'Golden 70:20:10 ratio of soybean tofu, carbon, and bentonite.',
+        },
+        {
+          time: '00:10',
+          seconds: 10,
+          tag: '03. LIQUID TEST',
+          title: 'Direct Liquid Pouring Test',
+          desc: 'Pouring liquid directly onto litter inside a clear acrylic box.',
+        },
+        {
+          time: '00:15',
+          seconds: 15,
+          tag: '04. RAPID CLUMP',
+          title: 'Tight Clumping & Zero Stick',
+          desc: 'Tight clump formed under 30s; scoop lifts clean with zero residue.',
+        },
+        {
+          time: '00:20',
+          seconds: 20,
+          tag: '05. IMPACT TEST',
+          title: 'Strong Impact Resistance',
+          desc: 'Dropped from height onto wooden flooring without breaking apart.',
+        },
+      ],
+      highlights: [
+        {
+          value: '< 30s',
+          label: 'Ultra-Fast Clumping',
+          desc: 'Immediately wraps and encapsulates liquid upon contact.',
+        },
+        {
+          value: '0%',
+          label: 'Box Bottom Adhesion',
+          desc: 'Transparent bottom stays completely clean and pristine.',
+        },
+        {
+          value: '100%',
+          label: 'Impact Integrity',
+          desc: 'Resilient solid clumps that do not crumble back into dust.',
+        },
+        {
+          value: '99%',
+          label: 'Odor Neutralization',
+          desc: 'Natural activated carbon locks ammonia smell instantly.',
+        },
+      ],
+      ctaTrial: 'Request Free Evaluation Sample',
+      ctaHotline: 'Hotline Partnership: 0866 780 599',
     },
   },
 };
