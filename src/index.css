@@ -13,3 +13,45 @@
     letter-spacing: normal !important;
   }
 }
+
+@keyframes float-paw {
+  0% { transform: translateY(0px) rotate(0deg) scale(0.95); opacity: 0.25; }
+  50% { transform: translateY(-25px) rotate(10deg) scale(1.08); opacity: 0.6; }
+  100% { transform: translateY(-50px) rotate(-8deg) scale(0.95); opacity: 0.25; }
+}
+
+@keyframes tail-wag {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(16deg); }
+}
+
+@keyframes purr-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.2; }
+  50% { transform: scale(1.1); opacity: 0.45; }
+}
+
+@keyframes eye-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+.animate-float-paw-1 {
+  animation: float-paw 7s ease-in-out infinite alternate;
+}
+.animate-float-paw-2 {
+  animation: float-paw 9s ease-in-out infinite alternate 1.5s;
+}
+.animate-float-paw-3 {
+  animation: float-paw 8s ease-in-out infinite alternate 3s;
+}
+.animate-tail-wag {
+  transform-origin: 75% 85%;
+  animation: tail-wag 2.5s ease-in-out infinite;
+}
+.animate-purr-pulse {
+  animation: purr-pulse 5s ease-in-out infinite;
+}
+.animate-eye-blink {
+  transform-origin: center;
+  animation: eye-blink 4s infinite;
+}

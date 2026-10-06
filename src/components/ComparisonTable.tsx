@@ -6,7 +6,7 @@ export const ComparisonTable: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-stone-200">
+    <section className="py-16 sm:py-24 bg-transparent border-b border-stone-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -24,7 +24,7 @@ export const ComparisonTable: React.FC = () => {
         </div>
 
         {/* Comparison Table */}
-        <div className="overflow-x-auto rounded-3xl border border-stone-200 shadow-sm bg-white">
+        <div className="overflow-x-auto rounded-3xl border border-stone-200/80 shadow-sm bg-white/85 backdrop-blur-xs">
           <table className="w-full text-left border-collapse min-w-[700px]">
             <thead>
               <tr className="border-b border-stone-200 bg-stone-50">

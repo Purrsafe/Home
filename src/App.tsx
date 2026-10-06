@@ -1,5 +1,6 @@
 import React from 'react';
 import { LanguageProvider } from './context/LanguageContext';
+import { CatBackground } from './components/CatBackground';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { ProductIntro } from './components/ProductIntro';
@@ -15,7 +16,10 @@ import { StickyBottomBar } from './components/StickyBottomBar';
 export default function App() {
   return (
     <LanguageProvider>
-      <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 selection:bg-amber-200 selection:text-amber-900 pb-16">
+      <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 selection:bg-amber-200 selection:text-amber-900 pb-16 relative">
+        {/* Cat-Themed Ambient Background */}
+        <CatBackground />
+
         {/* 1. Header with Prominent Brand, Product Name & Balanced Menu */}
         <Header />
 

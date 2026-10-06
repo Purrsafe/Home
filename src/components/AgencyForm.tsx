@@ -88,7 +88,7 @@ export const AgencyForm: React.FC = () => {
   };
 
   return (
-    <section id="dang-ky-dai-ly" className="py-16 sm:py-24 bg-white border-b border-stone-200">
+    <section id="dang-ky-dai-ly" className="py-16 sm:py-24 bg-transparent border-b border-stone-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="max-w-3xl mx-auto">
@@ -106,7 +106,7 @@ export const AgencyForm: React.FC = () => {
             </p>
           </div>
 
-          <div className="bg-[#FAF8F5] rounded-3xl border border-stone-200 shadow-xl overflow-hidden">
+          <div className="bg-white/85 backdrop-blur-xs rounded-3xl border border-stone-200/80 shadow-xl overflow-hidden">
             
             {submitted ? (
               <div className="p-8 sm:p-12 text-center space-y-6">

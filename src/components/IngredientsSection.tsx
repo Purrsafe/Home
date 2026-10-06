@@ -27,7 +27,7 @@ export const IngredientsSection: React.FC = () => {
   };
 
   return (
-    <section id="thanh-phan" className="py-16 sm:py-24 bg-[#FAF8F5] border-b border-stone-200">
+    <section id="thanh-phan" className="py-16 sm:py-24 bg-transparent border-b border-stone-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -56,8 +56,8 @@ export const IngredientsSection: React.FC = () => {
                 onClick={() => setActiveIngredient(item.id)}
                 className={`relative rounded-3xl p-6 sm:p-8 cursor-pointer transition-all duration-300 border flex flex-col justify-between ${
                   isSelected
-                    ? 'bg-white border-amber-600 shadow-xl ring-2 ring-amber-500/20 -translate-y-1'
-                    : 'bg-white/80 border-stone-200 hover:border-stone-300 hover:shadow-md'
+                    ? 'bg-white/95 border-amber-600 shadow-xl ring-2 ring-amber-500/20 -translate-y-1'
+                    : 'bg-white/75 backdrop-blur-xs border-stone-200/80 hover:border-stone-300 hover:shadow-md'
                 }`}
               >
                 <div>
@@ -118,7 +118,7 @@ export const IngredientsSection: React.FC = () => {
         </div>
 
         {/* Detailed Breakdown Box for Selected Ingredient */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-stone-200 shadow-md">
+        <div className="bg-white/85 backdrop-blur-xs rounded-3xl p-6 sm:p-10 border border-stone-200/80 shadow-md">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-4 space-y-3">

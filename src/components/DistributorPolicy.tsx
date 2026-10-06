@@ -6,7 +6,7 @@ export const DistributorPolicy: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="dai-ly" className="py-16 sm:py-24 bg-[#FAF8F5] border-b border-stone-200">
+    <section id="dai-ly" className="py-16 sm:py-24 bg-transparent border-b border-stone-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -28,7 +28,7 @@ export const DistributorPolicy: React.FC = () => {
           {t.distributor.benefits.map((benefit, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-3xl p-6 sm:p-7 border border-stone-200 shadow-xs hover:shadow-md hover:border-amber-300 transition-all flex flex-col justify-between"
+              className="bg-white/85 backdrop-blur-xs rounded-3xl p-6 sm:p-7 border border-stone-200/80 shadow-xs hover:shadow-md hover:border-amber-300 transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 flex items-center justify-center font-bold text-lg mb-4">
@@ -50,7 +50,7 @@ export const DistributorPolicy: React.FC = () => {
         </div>
 
         {/* 4-Step Onboarding Process */}
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-stone-200 shadow-sm mb-12">
+        <div className="bg-white/85 backdrop-blur-xs rounded-3xl p-8 sm:p-12 border border-stone-200/80 shadow-sm mb-12">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-xs uppercase font-extrabold text-amber-800 tracking-wider">
               {t.distributor.stepHeadingBadge}

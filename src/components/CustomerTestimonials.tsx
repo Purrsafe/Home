@@ -176,7 +176,7 @@ export const CustomerTestimonials: React.FC = () => {
   };
 
   return (
-    <section id="danh-gia" className="py-16 sm:py-24 bg-[#F8F5F0] border-b border-stone-200">
+    <section id="danh-gia" className="py-16 sm:py-24 bg-transparent border-b border-stone-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Title */}
@@ -205,7 +205,7 @@ export const CustomerTestimonials: React.FC = () => {
         </div>
 
         {/* Aggregate Score Bar */}
-        <div className="bg-white rounded-2xl p-5 sm:p-6 border border-stone-200 shadow-xs mb-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="bg-white/85 backdrop-blur-xs rounded-2xl p-5 sm:p-6 border border-stone-200/80 shadow-xs mb-10 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4 text-center sm:text-left">
             <div className="text-4xl sm:text-5xl font-black text-stone-900">
               4.9<span className="text-xl text-stone-400 font-normal">/5</span>
@@ -273,7 +273,7 @@ export const CustomerTestimonials: React.FC = () => {
             return (
               <div
                 key={review.id}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-stone-200 shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative group"
+                className="bg-white/85 backdrop-blur-xs rounded-3xl p-6 sm:p-7 border border-stone-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative group"
               >
                 <div>
                   {/* Tag and Custom badge */}
@@ -359,7 +359,7 @@ export const CustomerTestimonials: React.FC = () => {
         </div>
 
         {/* Inline Quick Comment Bar */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-amber-200/80 shadow-sm mb-4">
+        <div className="bg-white/85 backdrop-blur-xs rounded-3xl p-6 sm:p-8 border border-amber-200/80 shadow-sm mb-4">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-amber-800 bg-amber-100/60 px-2.5 py-0.5 rounded-md mb-1.5">

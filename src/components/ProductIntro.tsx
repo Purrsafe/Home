@@ -29,7 +29,7 @@ export const ProductIntro: React.FC = () => {
   ];
 
   return (
-    <section id="gioi-thieu" className="py-16 sm:py-24 bg-white border-b border-stone-200">
+    <section id="gioi-thieu" className="py-16 sm:py-24 bg-transparent border-b border-stone-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -54,7 +54,7 @@ export const ProductIntro: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="bg-stone-50 rounded-2xl p-6 sm:p-7 border border-stone-200 hover:border-amber-400 hover:shadow-md transition-all group flex flex-col justify-between"
+                className="bg-white/85 backdrop-blur-xs rounded-2xl p-6 sm:p-7 border border-stone-200/80 hover:border-amber-400 hover:shadow-md transition-all group flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-start gap-4">
@@ -101,7 +101,7 @@ export const ProductIntro: React.FC = () => {
         </div>
 
         {/* Product Specifications Table */}
-        <div className="bg-[#FAF8F5] rounded-3xl p-6 sm:p-10 border border-stone-200">
+        <div className="bg-white/80 backdrop-blur-xs rounded-3xl p-6 sm:p-10 border border-stone-200/80 shadow-xs">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-5 space-y-3">
@@ -120,7 +120,7 @@ export const ProductIntro: React.FC = () => {
             <div className="lg:col-span-7">
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
                 {t.intro.specs.map((s, idx) => (
-                  <div key={idx} className="bg-white p-4 rounded-xl border border-stone-200 text-center">
+                  <div key={idx} className="bg-white/90 p-4 rounded-xl border border-stone-200/80 text-center shadow-2xs">
                     <span className="text-xs text-stone-500 block mb-1">{s.label}</span>
                     <strong className="text-sm font-bold text-stone-900">{s.value}</strong>
                   </div>

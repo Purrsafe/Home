@@ -35,7 +35,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#FDFBF7] via-[#F8F4EE] to-[#FAF8F5] pt-8 pb-16 lg:pt-12 lg:pb-20 border-b border-stone-200">
+    <section className="relative overflow-hidden bg-transparent pt-8 pb-16 lg:pt-12 lg:pb-20 border-b border-stone-200/80">
       {/* Background Ambience */}
       <div className="absolute top-0 right-0 -mr-24 -mt-24 w-96 h-96 bg-amber-200/30 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 -ml-24 -mb-24 w-96 h-96 bg-orange-200/20 rounded-full blur-3xl pointer-events-none" />

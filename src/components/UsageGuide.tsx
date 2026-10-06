@@ -6,7 +6,7 @@ export const UsageGuide: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-stone-200">
+    <section className="py-16 sm:py-24 bg-transparent border-b border-stone-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -28,7 +28,7 @@ export const UsageGuide: React.FC = () => {
           {t.usage.steps.map((item) => (
             <div
               key={item.step}
-              className="bg-[#FAF8F5] rounded-3xl p-6 sm:p-7 border border-stone-200 shadow-xs hover:border-amber-400 hover:shadow-md transition-all flex flex-col justify-between"
+              className="bg-white/85 backdrop-blur-xs rounded-3xl p-6 sm:p-7 border border-stone-200/80 shadow-xs hover:border-amber-400 hover:shadow-md transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 font-black text-lg flex items-center justify-center mb-4">
@@ -51,7 +51,7 @@ export const UsageGuide: React.FC = () => {
         </div>
 
         {/* Pro Tip Box for Switching Litter */}
-        <div className="bg-amber-900/5 rounded-3xl p-6 sm:p-8 border border-amber-900/10 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6">
+        <div className="bg-amber-900/10 backdrop-blur-xs rounded-3xl p-6 sm:p-8 border border-amber-900/20 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-6">
           <div className="w-14 h-14 rounded-2xl bg-amber-700 text-white flex items-center justify-center shrink-0 text-2xl shadow-md">
             🐱
           </div>
