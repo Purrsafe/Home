@@ -175,23 +175,6 @@ export const Hero: React.FC = () => {
                       loop
                       className="w-full h-full object-cover"
                     />
-
-                    {/* Floating Top Tag */}
-                    <div className="absolute top-4 left-4 bg-stone-900/90 backdrop-blur-md text-white px-3 py-1.5 rounded-xl shadow-lg border border-white/10 pointer-events-none z-10 flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-xs font-bold text-amber-300">Video Thực Tế (25s)</span>
-                    </div>
-
-                    {/* Floating Bottom Card */}
-                    <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-md text-stone-900 px-3 py-2 rounded-xl shadow-xl border border-stone-200/90 pointer-events-none z-10 flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center font-bold text-sm">
-                        30s
-                      </div>
-                      <div className="text-left">
-                        <div className="text-xs font-bold text-stone-900">Vón Nhanh 30s</div>
-                        <div className="text-[10px] text-stone-500">Không Bám Đáy Khay</div>
-                      </div>
-                    </div>
                   </div>
                 ) : (
                   <div className="relative w-full">
