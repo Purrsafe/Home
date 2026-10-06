@@ -159,13 +159,15 @@ export const Hero: React.FC = () => {
 
           {/* Right Column: Visual Product Packaging Showcase 100% Matching Uploaded Photo */}
           <div id="hinh-anh-thuc-te" className="lg:col-span-6 relative scroll-mt-24">
-            <div className="relative mx-auto max-w-sm sm:max-w-md">
+            <div className={`relative mx-auto transition-all duration-300 ${
+              selectedMedia === 'video' ? 'max-w-md sm:max-w-lg lg:max-w-[540px]' : 'max-w-sm sm:max-w-md'
+            }`}>
               
               {/* Media Showcase Frame (Video or Photos) */}
               <div className="relative rounded-3xl overflow-hidden bg-stone-900 p-2 shadow-2xl border-4 border-stone-800/80 ring-1 ring-stone-900/10 group">
                 
                 {selectedMedia === 'video' ? (
-                  <div className="relative w-full aspect-[4/3] bg-stone-950 rounded-2xl overflow-hidden flex items-center justify-center">
+                  <div className="relative w-full aspect-video bg-stone-950 rounded-2xl overflow-hidden flex items-center justify-center">
                     <video
                       ref={videoRef}
                       src={videoSrc}
@@ -173,7 +175,7 @@ export const Hero: React.FC = () => {
                       controls
                       playsInline
                       loop
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover rounded-2xl"
                     />
                   </div>
                 ) : (
