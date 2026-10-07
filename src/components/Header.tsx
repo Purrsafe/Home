@@ -25,9 +25,11 @@ export const Header: React.FC = () => {
           
           {/* Logo & Product Name */}
           <a href="#" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-2xl bg-amber-700 text-white flex items-center justify-center shadow-md shadow-amber-800/15 group-hover:scale-105 transition-transform text-2xl shrink-0">
-              🐾
-            </div>
+            <img
+              src={`${import.meta.env.BASE_URL}favicon.svg`}
+              alt="PurrSafe Logo"
+              className="w-12 h-12 rounded-2xl shadow-md shadow-amber-800/15 group-hover:scale-105 transition-transform shrink-0 object-contain"
+            />
             <div className="flex flex-col">
               <div className="flex items-baseline gap-2.5 flex-wrap">
                 <span className="text-2xl sm:text-3xl font-black text-stone-900 group-hover:text-amber-800 transition-colors">

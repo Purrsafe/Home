@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <!-- Warm amber/terracotta background matching user image -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C2410C" />
+      <stop offset="50%" stop-color="#B45309" />
+      <stop offset="100%" stop-color="#9A3412" />
+    </linearGradient>
+
+    <!-- Deep indigo-plum paw gradient matching user image -->
+    <linearGradient id="pawGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3C2A62" />
+      <stop offset="50%" stop-color="#2D1C4E" />
+      <stop offset="100%" stop-color="#22133D" />
+    </linearGradient>
+
+    <linearGradient id="padHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4E377C" />
+      <stop offset="100%" stop-color="#291849" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded Squircle Background -->
+  <rect width="100" height="100" rx="25" fill="url(#bg)" />
+
+  <!-- PAW 1: Upper-left paw print -->
+  <g transform="translate(38, 43)">
+    <!-- Main pad -->
+    <path d="M-10,3 C-10,-4 10,-4 10,3 C10,9 6,10 0,10 C-6,10 -10,9 -10,3 Z" fill="url(#padHighlight)" />
+    <!-- 4 Toe pads -->
+    <ellipse cx="-8.2" cy="-5" rx="2.6" ry="3.8" transform="rotate(-25 -8.2 -5)" fill="url(#pawGrad)" />
+    <ellipse cx="-2.8" cy="-8.5" rx="2.7" ry="4" transform="rotate(-8 -2.8 -8.5)" fill="url(#pawGrad)" />
+    <ellipse cx="2.8" cy="-8.5" rx="2.7" ry="4" transform="rotate(8 2.8 -8.5)" fill="url(#pawGrad)" />
+    <ellipse cx="8.2" cy="-5" rx="2.6" ry="3.8" transform="rotate(25 8.2 -5)" fill="url(#pawGrad)" />
+  </g>
+
+  <!-- PAW 2: Lower-right paw print (walking step) -->
+  <g transform="translate(62, 63)">
+    <!-- Main pad -->
+    <path d="M-11,3 C-11,-4 11,-4 11,3 C11,9.5 6,10.5 0,10.5 C-6,10.5 -11,9.5 -11,3 Z" fill="url(#padHighlight)" />
+    <!-- 4 Toe pads -->
+    <ellipse cx="-9" cy="-5.5" rx="2.8" ry="4.1" transform="rotate(-25 -9 -5.5)" fill="url(#pawGrad)" />
+    <ellipse cx="-3.1" cy="-9.2" rx="2.9" ry="4.3" transform="rotate(-8 -3.1 -9.2)" fill="url(#pawGrad)" />
+    <ellipse cx="3.1" cy="-9.2" rx="2.9" ry="4.3" transform="rotate(8 3.1 -9.2)" fill="url(#pawGrad)" />
+    <ellipse cx="9" cy="-5.5" rx="2.8" ry="4.1" transform="rotate(25 9 -5.5)" fill="url(#pawGrad)" />
+  </g>
+</svg>
