@@ -1,9 +1,17 @@
-import React from 'react';
-import { Phone, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Phone, ArrowRight, ChevronDown } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export const DistributorPolicy: React.FC = () => {
   const { t } = useLanguage();
+  const [expandedItems, setExpandedItems] = useState<Record<number, boolean>>({});
+
+  const toggleItem = (idx: number) => {
+    setExpandedItems((prev) => ({
+      ...prev,
+      [idx]: !prev[idx],
+    }));
+  };
 
   return (
     <section id="dai-ly" className="py-16 sm:py-24 bg-transparent border-b border-stone-200/80">
@@ -21,32 +29,66 @@ export const DistributorPolicy: React.FC = () => {
           <p className="text-base sm:text-lg text-stone-600 leading-relaxed">
             {t.distributor.desc}
           </p>
+          <p className="text-xs font-bold text-amber-700 mt-3">
+            💡 Nhấp vào từng ô chính sách bên dưới để xem nội dung chi tiết
+          </p>
         </div>
 
-        {/* 6 Core Distributor Benefits */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {t.distributor.benefits.map((benefit, idx) => (
-            <div
-              key={idx}
-              className="bg-white/85 backdrop-blur-xs rounded-3xl p-6 sm:p-7 border border-stone-200/80 shadow-xs hover:shadow-md hover:border-amber-300 transition-all flex flex-col justify-between"
-            >
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 flex items-center justify-center font-bold text-lg mb-4">
-                  0{idx + 1}
-                </div>
-                <h3 className="text-lg font-black text-stone-900 mb-2">
-                  {benefit.title}
-                </h3>
-                <p className="text-stone-600 text-sm leading-relaxed">
-                  {benefit.desc}
-                </p>
-              </div>
+        {/* 6 Core Distributor Benefits - Click to Expand */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-16">
+          {t.distributor.benefits.map((benefit, idx) => {
+            const isExpanded = !!expandedItems[idx];
 
-              <div className="pt-4 mt-4 border-t border-stone-100 flex items-center text-xs font-bold text-amber-800">
-                <span>{t.distributor.exclusiveBadge}</span>
+            return (
+              <div
+                key={idx}
+                onClick={() => toggleItem(idx)}
+                className={`bg-white/85 backdrop-blur-xs rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden group select-none ${
+                  isExpanded
+                    ? 'border-amber-500 shadow-md ring-2 ring-amber-500/20 p-6'
+                    : 'border-stone-200/80 hover:border-amber-300 hover:shadow-xs p-5'
+                }`}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleItem(idx);
+                  }
+                }}
+              >
+                {/* Header: Number, Title and Toggle Icon */}
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 flex items-center justify-center font-black text-base shrink-0 group-hover:bg-amber-100 transition-colors">
+                      0{idx + 1}
+                    </div>
+                    <h3 className="text-base sm:text-lg font-black text-stone-900 group-hover:text-amber-800 transition-colors text-left leading-snug">
+                      {benefit.title}
+                    </h3>
+                  </div>
+
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 shrink-0 ${
+                    isExpanded ? 'bg-amber-100 text-amber-800 rotate-180' : 'bg-stone-100 text-stone-500 group-hover:bg-amber-50 group-hover:text-amber-700'
+                  }`}>
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
+                </div>
+
+                {/* Collapsible Content */}
+                {isExpanded && (
+                  <div className="mt-4 pt-4 border-t border-amber-100 animate-in fade-in slide-in-from-top-2 duration-200 text-left">
+                    <p className="text-stone-600 text-sm leading-relaxed mb-3">
+                      {benefit.desc}
+                    </p>
+                    <div className="flex items-center text-xs font-bold text-amber-800">
+                      <span>✓ {t.distributor.exclusiveBadge}</span>
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* 4-Step Onboarding Process */}
@@ -77,31 +119,31 @@ export const DistributorPolicy: React.FC = () => {
           </div>
         </div>
 
-        {/* Quick Call to Action Box */}
-        <div className="bg-gradient-to-r from-stone-900 to-stone-800 rounded-3xl p-8 sm:p-10 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
-          <div className="space-y-2 text-center md:text-left">
-            <h3 className="text-2xl font-black text-white">
+        {/* CTA Card for Inquiry */}
+        <div className="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl border border-amber-900/40 text-center sm:text-left flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="space-y-2 max-w-xl">
+            <h3 className="text-2xl sm:text-3xl font-black text-amber-300">
               {t.distributor.ctaCardTitle}
             </h3>
-            <p className="text-stone-300 text-sm max-w-xl">
+            <p className="text-stone-300 text-sm sm:text-base leading-relaxed">
               {t.distributor.ctaCardDesc}
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full sm:w-auto">
             <a
               href="#dang-ky-dai-ly"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-sm text-center shadow-md transition-colors"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-sm text-center flex items-center justify-center gap-2 shadow-md transition-colors"
             >
-              {t.distributor.ctaCardBtn}
+              <span>{t.distributor.ctaCardBtn}</span>
+              <ArrowRight className="w-4 h-4" />
             </a>
-
             <a
               href={`tel:${t.brand.hotline}`}
               className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white hover:bg-stone-100 text-stone-900 font-bold text-sm text-center flex items-center justify-center gap-2 shadow-md transition-colors"
             >
               <Phone className="w-4 h-4 text-amber-700" />
-              <span>{t.brand.hotlineFormatted}</span>
+              <span>{t.distributor.ctaCardCall} {t.brand.hotlineFormatted}</span>
             </a>
           </div>
         </div>

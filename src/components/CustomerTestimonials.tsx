@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Star, CheckCircle, Heart, MessageSquarePlus, ThumbsUp, Send, Sparkles } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Star, CheckCircle, Heart, MessageSquarePlus, ThumbsUp, Send, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 // Import bundled customer images directly so Vite bundles and resolves them with guaranteed valid URLs
@@ -45,7 +45,9 @@ export const CustomerTestimonials: React.FC = () => {
   const [selectedTag, setSelectedTag] = useState<string>('all');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [customReviews, setCustomReviews] = useState<UserReview[]>([]);
-  
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+
   const [likes, setLikes] = useState<Record<string, number>>({
     'owner-1': 56,
     'owner-2': 42,
@@ -175,6 +177,34 @@ export const CustomerTestimonials: React.FC = () => {
     return customerAvatarList[idx % customerAvatarList.length];
   };
 
+  const handleScroll = () => {
+    if (!sliderRef.current) return;
+    const { scrollLeft } = sliderRef.current;
+    const cardWidth = 360;
+    const index = Math.round(scrollLeft / cardWidth);
+    setActiveSlide(Math.min(displayedReviews.length - 1, Math.max(0, index)));
+  };
+
+  const scrollPrev = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: -360, behavior: 'smooth' });
+    }
+  };
+
+  const scrollNext = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: 360, behavior: 'smooth' });
+    }
+  };
+
+  const scrollToIndex = (index: number) => {
+    if (sliderRef.current) {
+      const cardWidth = 360;
+      sliderRef.current.scrollTo({ left: index * cardWidth, behavior: 'smooth' });
+      setActiveSlide(index);
+    }
+  };
+
   return (
     <section id="danh-gia" className="py-16 sm:py-24 bg-transparent border-b border-stone-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -205,7 +235,7 @@ export const CustomerTestimonials: React.FC = () => {
         </div>
 
         {/* Aggregate Score Bar */}
-        <div className="bg-white/85 backdrop-blur-xs rounded-2xl p-5 sm:p-6 border border-stone-200/80 shadow-xs mb-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="bg-white/85 backdrop-blur-xs rounded-2xl p-5 sm:p-6 border border-stone-200/80 shadow-xs mb-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4 text-center sm:text-left">
             <div className="text-4xl sm:text-5xl font-black text-stone-900">
               4.9<span className="text-xl text-stone-400 font-normal">/5</span>
@@ -234,128 +264,193 @@ export const CustomerTestimonials: React.FC = () => {
         </div>
 
         {/* Filter Controls with Active Category Counter */}
-        <div className="flex flex-wrap items-center gap-2 mb-8">
-          {filterTabs.map((tab) => {
-            const count =
-              tab.id === 'all'
-                ? allReviews.length
-                : allReviews.filter((r) => r.category === tab.id).length;
-            const isSelected = selectedTag === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setSelectedTag(tab.id)}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  isSelected
-                    ? 'bg-amber-800 text-white shadow-xs'
-                    : 'bg-white text-stone-700 border border-stone-200 hover:bg-stone-100'
-                }`}
-              >
-                <span>{tab.label}</span>
-                <span
-                  className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                    isSelected ? 'bg-amber-950/40 text-amber-100' : 'bg-stone-100 text-stone-600'
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+          <div className="flex flex-wrap items-center gap-2">
+            {filterTabs.map((tab) => {
+              const count =
+                tab.id === 'all'
+                  ? allReviews.length
+                  : allReviews.filter((r) => r.category === tab.id).length;
+              const isSelected = selectedTag === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setSelectedTag(tab.id);
+                    setActiveSlide(0);
+                    if (sliderRef.current) sliderRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+                  }}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                    isSelected
+                      ? 'bg-amber-800 text-white shadow-xs'
+                      : 'bg-white/80 text-stone-700 border border-stone-200/80 hover:bg-stone-50'
                   }`}
                 >
-                  {count}
-                </span>
-              </button>
-            );
-          })}
+                  <span>{tab.label}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                      isSelected ? 'bg-amber-950/40 text-amber-100' : 'bg-stone-100 text-stone-600'
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Carousel Arrows on top-right for quick navigation */}
+          <div className="hidden sm:flex items-center gap-2">
+            <button
+              onClick={scrollPrev}
+              aria-label="Previous review"
+              className="w-9 h-9 rounded-full bg-white border border-stone-300 hover:border-amber-500 hover:text-amber-800 text-stone-700 flex items-center justify-center shadow-xs transition-all cursor-pointer"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={scrollNext}
+              aria-label="Next review"
+              className="w-9 h-9 rounded-full bg-white border border-stone-300 hover:border-amber-500 hover:text-amber-800 text-stone-700 flex items-center justify-center shadow-xs transition-all cursor-pointer"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          {displayedReviews.map((review, idx) => {
-            const avatarSrc = getAvatarSrc(review, idx);
-            const currentLikes = likes[review.id] ?? review.likes ?? 35;
+        {/* Horizontal Scrollable Carousel (Matching Picture 2) */}
+        <div className="relative group mb-10">
+          {/* Floating Left Button (Mobile/Desktop overlay) */}
+          <button
+            onClick={scrollPrev}
+            aria-label="Scroll left"
+            className="sm:hidden absolute -left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/95 border border-stone-300 text-stone-800 shadow-lg flex items-center justify-center cursor-pointer"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
 
-            return (
-              <div
-                key={review.id}
-                className="bg-white/85 backdrop-blur-xs rounded-3xl p-6 sm:p-7 border border-stone-200/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between relative group"
-              >
-                <div>
-                  {/* Tag and Custom badge */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="text-[11px] font-extrabold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-md border border-amber-200/80">
-                      {review.tagLabel || '#PurrSafeReview'}
-                    </span>
-                    {review.isCustom && (
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded border border-emerald-300 flex items-center gap-1">
-                        <Sparkles className="w-3 h-3" /> Mới đăng
+          {/* Floating Right Button (Mobile/Desktop overlay) */}
+          <button
+            onClick={scrollNext}
+            aria-label="Scroll right"
+            className="sm:hidden absolute -right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/95 border border-stone-300 text-stone-800 shadow-lg flex items-center justify-center cursor-pointer"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Horizontal Track */}
+          <div
+            ref={sliderRef}
+            onScroll={handleScroll}
+            className="flex items-stretch gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory py-3 px-1 scrollbar-none"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {displayedReviews.map((review, idx) => {
+              const avatarSrc = getAvatarSrc(review, idx);
+              const currentLikes = likes[review.id] ?? review.likes ?? 35;
+
+              return (
+                <div
+                  key={review.id}
+                  className="w-[300px] sm:w-[350px] shrink-0 snap-center bg-white/85 backdrop-blur-xs rounded-3xl p-6 border border-stone-200/80 shadow-xs hover:shadow-md hover:border-amber-300 transition-all flex flex-col justify-between group/card select-none"
+                >
+                  <div>
+                    {/* Tag and Custom badge */}
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <span className="text-[11px] font-extrabold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-md border border-amber-200/80">
+                        {review.tagLabel || '#PurrSafeReview'}
                       </span>
-                    )}
-                  </div>
-
-                  {/* Author Info */}
-                  <div className="flex items-center gap-3.5 mb-4">
-                    <div className="relative shrink-0">
-                      <img
-                        src={avatarSrc}
-                        alt={review.author}
-                        onError={(e) => {
-                          // Guaranteed fallback so images never break or error out
-                          const target = e.currentTarget;
-                          target.onerror = null;
-                          target.src = customerAvatarList[idx % customerAvatarList.length];
-                        }}
-                        className="w-14 h-14 rounded-2xl object-cover border-2 border-amber-200 shadow-xs group-hover:scale-105 transition-transform"
-                      />
-                      <span className="absolute -bottom-1 -right-1 bg-amber-600 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-black border border-white shadow-2xs">
-                        🐾
-                      </span>
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="font-bold text-stone-900 text-base">
-                          {review.author}
+                      {review.isCustom && (
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded border border-emerald-300 flex items-center gap-1">
+                          <Sparkles className="w-3 h-3" /> Mới đăng
                         </span>
-                        <span title={t.reviews.verifiedBuyer}>
-                          <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 inline" />
-                        </span>
-                      </div>
-                      <p className="text-xs text-stone-500 truncate">{review.role}</p>
-                      {review.location && (
-                        <p className="text-[11px] text-amber-800 font-medium">📍 {review.location}</p>
                       )}
                     </div>
-                  </div>
 
-                  {/* Stars and Date */}
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center text-amber-400">
-                      {[...Array(review.stars)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                      ))}
+                    {/* Author Info */}
+                    <div className="flex items-center gap-3.5 mb-3.5">
+                      <div className="relative shrink-0">
+                        <img
+                          src={avatarSrc}
+                          alt={review.author}
+                          onError={(e) => {
+                            const target = e.currentTarget;
+                            target.onerror = null;
+                            target.src = customerAvatarList[idx % customerAvatarList.length];
+                          }}
+                          className="w-13 h-13 rounded-2xl object-cover border-2 border-amber-200 shadow-xs group-hover/card:scale-105 transition-transform"
+                        />
+                        <span className="absolute -bottom-1 -right-1 bg-amber-600 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-black border border-white shadow-2xs">
+                          🐾
+                        </span>
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="font-bold text-stone-900 text-sm sm:text-base truncate">
+                            {review.author}
+                          </span>
+                          <span title={t.reviews.verifiedBuyer}>
+                            <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 inline" />
+                          </span>
+                        </div>
+                        <p className="text-xs text-stone-500 truncate">{review.role}</p>
+                        {review.location && (
+                          <p className="text-[11px] text-amber-800 font-medium truncate">📍 {review.location}</p>
+                        )}
+                      </div>
                     </div>
-                    <span className="text-xs text-stone-400">{review.date}</span>
+
+                    {/* Stars and Date */}
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center text-amber-400">
+                        {[...Array(review.stars)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                        ))}
+                      </div>
+                      <span className="text-xs text-stone-400">{review.date}</span>
+                    </div>
+
+                    {/* Review Text */}
+                    <p className="text-stone-700 text-xs sm:text-sm leading-relaxed mb-4 italic line-clamp-5">
+                      "{review.content}"
+                    </p>
                   </div>
 
-                  {/* Review Text */}
-                  <p className="text-stone-700 text-sm leading-relaxed mb-4 italic">
-                    "{review.content}"
-                  </p>
-                </div>
+                  {/* Bottom Helpful Counter */}
+                  <div className="pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+                    <span className="text-[10px] sm:text-[11px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded-md">
+                      {t.reviews.verifiedBuyer}
+                    </span>
 
-                {/* Bottom Helpful Counter */}
-                <div className="pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
-                  <span className="text-[11px] text-emerald-800 font-semibold bg-emerald-50 px-2.5 py-1 rounded-md">
-                    {t.reviews.verifiedBuyer}
-                  </span>
-
-                  <button
-                    onClick={() => handleLike(review.id)}
-                    className="flex items-center gap-1.5 hover:text-amber-800 transition-colors py-1 px-2.5 rounded-lg hover:bg-stone-50 cursor-pointer"
-                  >
-                    <ThumbsUp className="w-3.5 h-3.5 text-stone-500" />
-                    <span>{t.reviews.helpful} ({currentLikes})</span>
-                  </button>
+                    <button
+                      onClick={() => handleLike(review.id)}
+                      className="flex items-center gap-1.5 hover:text-amber-800 transition-colors py-1 px-2 rounded-lg hover:bg-stone-50 cursor-pointer"
+                    >
+                      <ThumbsUp className="w-3.5 h-3.5 text-stone-500" />
+                      <span>{t.reviews.helpful} ({currentLikes})</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+
+          {/* Pagination Indicator Dots */}
+          <div className="flex items-center justify-center gap-1.5 mt-4">
+            {displayedReviews.map((_, dotIdx) => (
+              <button
+                key={dotIdx}
+                onClick={() => scrollToIndex(dotIdx)}
+                aria-label={`Đi tới đánh giá ${dotIdx + 1}`}
+                className={`h-2 rounded-full transition-all cursor-pointer ${
+                  activeSlide === dotIdx
+                    ? 'w-6 bg-amber-600'
+                    : 'w-2 bg-stone-300 hover:bg-stone-400'
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Inline Quick Comment Bar */}
