@@ -48,17 +48,19 @@ export const Hero: React.FC = () => {
 
   const photos = {
     studio: {
-      src: photoStudio,
+      src: `${baseUrl}images/purrsafe_real.jpg`,
+      fallback: photoStudio,
       label: 'Ảnh Studio',
       alt: 'PurrSafe Mixed Cat Litter MILK 2.8KG Hình ảnh thực tế studio',
-      aspect: 'max-h-[600px] object-contain',
+      aspect: 'w-full h-auto max-h-[620px] object-cover',
       tag: 'Chụp Thực Tế 100%',
     },
     outdoor: {
-      src: photoOutdoor,
+      src: `${baseUrl}images/purrsafe_real_outdoor.jpg`,
+      fallback: photoOutdoor,
       label: 'Ảnh Ngoài Trời',
       alt: 'PurrSafe Mixed Cat Litter MILK 2.8KG Chụp ngoại cảnh thực tế',
-      aspect: 'max-h-[600px] aspect-[4/3] object-cover',
+      aspect: 'w-full h-auto aspect-[4/3] object-cover',
       tag: 'Ảnh Ngoại Cảnh',
     },
   };
@@ -189,7 +191,9 @@ export const Hero: React.FC = () => {
           {/* Right Column: Visual Product Packaging Showcase 100% Matching Uploaded Photo */}
           <div id="hinh-anh-thuc-te" className="lg:col-span-6 relative scroll-mt-24">
             <div className={`relative mx-auto transition-all duration-300 ${
-              selectedMedia === 'video' ? 'max-w-md sm:max-w-lg lg:max-w-[540px]' : 'max-w-sm sm:max-w-md'
+              selectedMedia === 'video' || selectedMedia === 'outdoor'
+                ? 'max-w-md sm:max-w-lg lg:max-w-[540px]'
+                : 'max-w-sm sm:max-w-md'
             }`}>
               
               {/* Media Showcase Frame (Video or Photos) */}
@@ -237,8 +241,9 @@ export const Hero: React.FC = () => {
                       alt={photos[selectedMedia].alt}
                       onError={(e) => {
                         const target = e.currentTarget;
-                        if (target.src !== photoReal) {
-                          target.src = photoReal;
+                        const fallbackSrc = photos[selectedMedia].fallback;
+                        if (target.src !== fallbackSrc) {
+                          target.src = fallbackSrc;
                         }
                       }}
                       className={`w-full h-auto ${photos[selectedMedia].aspect} object-center rounded-2xl group-hover:scale-[1.01] transition-transform duration-500`}
