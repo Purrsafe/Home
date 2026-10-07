@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Sparkles, Phone, Shield, Leaf, Droplets, Star, Camera, Film, Play, Volume2, VolumeX } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -11,11 +11,40 @@ export const Hero: React.FC = () => {
   const { t } = useLanguage();
   const [activeHighlight, setActiveHighlight] = useState<number>(0);
   const [selectedMedia, setSelectedMedia] = useState<'video' | 'studio' | 'outdoor'>('video');
+  const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const baseUrl = import.meta.env.BASE_URL;
   const videoSrc = `${baseUrl}videos/purrsafe_test_quality.mp4`;
   const posterSrc = `${baseUrl}videos/purrsafe_video_poster.jpg`;
+
+  // Autoplay video immediately upon mounting and when returning to video tab
+  useEffect(() => {
+    if (selectedMedia === 'video' && videoRef.current) {
+      videoRef.current.muted = isMuted;
+      videoRef.current.defaultMuted = true;
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Fallback if browser requires muted autoplay
+          if (videoRef.current) {
+            videoRef.current.muted = true;
+            setIsMuted(true);
+            videoRef.current.play().catch(() => {});
+          }
+        });
+      }
+    }
+  }, [selectedMedia, isMuted]);
+
+  const toggleSound = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      const nextMuted = !videoRef.current.muted;
+      videoRef.current.muted = nextMuted;
+      setIsMuted(nextMuted);
+    }
+  };
 
   const photos = {
     studio: {
@@ -167,16 +196,39 @@ export const Hero: React.FC = () => {
               <div className="relative rounded-3xl overflow-hidden bg-stone-900 p-2 shadow-2xl border-4 border-stone-800/80 ring-1 ring-stone-900/10 group">
                 
                 {selectedMedia === 'video' ? (
-                  <div className="relative w-full aspect-video bg-stone-950 rounded-2xl overflow-hidden flex items-center justify-center">
+                  <div className="relative w-full aspect-video bg-stone-950 rounded-2xl overflow-hidden flex items-center justify-center group/video">
                     <video
                       ref={videoRef}
                       src={videoSrc}
                       poster={posterSrc}
-                      controls
+                      autoPlay
+                      muted
                       playsInline
                       loop
+                      controls
+                      preload="auto"
                       className="w-full h-full object-cover rounded-2xl"
                     />
+
+                    {/* Quick Sound Toggle Button */}
+                    <button
+                      type="button"
+                      onClick={toggleSound}
+                      aria-label={isMuted ? 'Bật âm thanh' : 'Tắt âm thanh'}
+                      className="absolute top-3 right-3 z-20 px-2.5 py-1.5 rounded-full bg-stone-900/80 hover:bg-stone-900 text-white text-xs font-semibold backdrop-blur-md border border-white/20 flex items-center gap-1.5 shadow-md cursor-pointer transition-all hover:scale-105"
+                    >
+                      {isMuted ? (
+                        <>
+                          <VolumeX className="w-3.5 h-3.5 text-amber-300" />
+                          <span className="text-[11px]">Bật tiếng</span>
+                        </>
+                      ) : (
+                        <>
+                          <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
+                          <span className="text-[11px]">Tắt tiếng</span>
+                        </>
+                      )}
+                    </button>
                   </div>
                 ) : (
                   <div className="relative w-full">
